@@ -14,7 +14,7 @@ public interface ContactRepository extends JpaRepository<Contact, Integer> {
 
     //JPQL CANNOT LIMIT MAXIMUM RESULT SIZE
     @Query(value = "SELECT listing_id FROM Contact GROUP BY listing_id ORDER BY COUNT(contact_date_time) DESC", nativeQuery = true)
-    List<Integer> findMostContactedListings(@Param("count") long count);
+    List<Integer> findMostContactedListings();
 
     @Query(value = "SELECT MIN(contact_date_time) FROM Contact", nativeQuery = true)
     LocalDateTime getEarliestContactDate();

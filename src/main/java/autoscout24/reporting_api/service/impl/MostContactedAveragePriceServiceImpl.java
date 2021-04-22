@@ -26,8 +26,15 @@ public class MostContactedAveragePriceServiceImpl implements MostContactedAverag
 
         int countOf30Percent = (int) listingRepository.count() * 3 / 10;
 
-        //JPQL CANNOT LIMIT MAXIMUM RESULT SIZE, that's why .subList() is used.
-        List<Integer> mostContactedListings = contactRepository.findMostContactedListings(countOf30Percent).subList(0, countOf30Percent + 1);
+        //JPQL CANNOT LIMIT MAXIMUM RESULT SIZE(ROW NUMBER)
+        List<Integer> mostContactedListingsAll = contactRepository.findMostContactedListings();
+
+        if(mostContactedListingsAll.size() < countOf30Percent){
+            countOf30Percent = mostContactedListingsAll.size();
+        }
+
+        //JPQL CANNOT LIMIT MAXIMUM RESULT SIZE(ROW NUMBER), that's why .subList() is used.
+        List<Integer> mostContactedListings = mostContactedListingsAll.subList(0, countOf30Percent);
 
         Integer averagePrice = listingRepository.findAverageOfListings(mostContactedListings);
 

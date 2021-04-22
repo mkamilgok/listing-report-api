@@ -27,8 +27,14 @@ public class MakePercentualDistributionServiceImpl implements MakePercentualDist
         long totalListingCount = listingRepository.count();
 
         for (Object[] makeCount : makeCountList) {
-            int makePercentage = (int) (Integer.parseInt(makeCount[1].toString()) * 100.0 / totalListingCount);
-            makePercentualDistributionMap.put(makeCount[0].toString(), makePercentage + "%");
+
+            String make = makeCount[0].toString();
+
+            int countOfMake = Integer.parseInt(makeCount[1].toString());
+
+            int makePercentage = (int)((countOfMake) * 100.0 / totalListingCount);
+
+            makePercentualDistributionMap.put(make, makePercentage + "%");
         }
 
         return makePercentualDistributionMap;

@@ -63,9 +63,13 @@ public class MostContactedListingsByMonthsServiceImpl implements MostContactedLi
         List<ListingWithRanking> topListings = new ArrayList<>();
 
         LocalDateTime startDateTime = LocalDateTime.of(currentYear, currentMonth, 1, 0, 0);
-        LocalDateTime endDateTime = LocalDateTime.of(currentYear, currentMonth, currentMonth.maxLength(), 23, 59);
 
-        List<Object[]> top5Listings = contactRepository.findMostContactedListingsBetweenDates(startDateTime, endDateTime).subList(0, 5);
+        int lastDayOfMonth = (currentMonth == Month.FEBRUARY && currentYear % 4 != 0) ? 28 : currentMonth.maxLength();
+
+        LocalDateTime endDateTime = LocalDateTime.of(currentYear, currentMonth, lastDayOfMonth, 23, 59);
+
+        List<Object[]> top5Listings = contactRepository.findMostContactedListingsBetweenDates(startDateTime, endDateTime)
+                                                        .subList(0, 5);
 
         for (int i = 0; i < top5Listings.size(); i++) {
             Object[] listing = top5Listings.get(i);
