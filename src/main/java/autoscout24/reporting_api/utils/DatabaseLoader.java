@@ -34,12 +34,15 @@ public class DatabaseLoader implements ApplicationRunner {
         loadContactsToDatabase();
     }
 
+    /**
+     * loadListingsToDatabase loads all of the listing data from listings.csv file
+     */
     private void loadListingsToDatabase() {
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/static/listings.csv"))) {
             String record;
             while ((record = br.readLine()) != null) {
                 String[] recordValues = record.split(",");
-                if (!recordValues[0].equals("\"id\"")) {
+                if (!recordValues[0].equals("\"id\"")) { // if it's a header row, skip. Save all of the other rows
                     Listing listing = mapCsvRecordToListing(recordValues);
                     listingRepository.save(listing);
                 }
@@ -53,6 +56,9 @@ public class DatabaseLoader implements ApplicationRunner {
         }
     }
 
+    /**
+     * mapCsvRecordToListing maps a record in csv file to a Listing object.
+     */
     private Listing mapCsvRecordToListing(String[] recordValues) {
 
         Integer id = Integer.parseInt(recordValues[0]);
@@ -70,12 +76,15 @@ public class DatabaseLoader implements ApplicationRunner {
         return new Listing(id, make, price, mileage, sellerType);
     }
 
+    /**
+     * loadContactsToDatabase loads all of the contact data from contacts.csv file
+     */
     private void loadContactsToDatabase() {
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/static/contacts.csv"))) {
             String record;
             while ((record = br.readLine()) != null) {
                 String[] recordValues = record.split(",");
-                if (!recordValues[0].equals("\"listing_id\"")) {
+                if (!recordValues[0].equals("\"listing_id\"")) {// if it's a header row, skip. Save all of the other rows
                     Contact contact = mapCsvRecordToContact(recordValues);
                     contactRepository.save(contact);
                 }
@@ -89,6 +98,9 @@ public class DatabaseLoader implements ApplicationRunner {
         }
     }
 
+    /**
+     * mapCsvRecordToContact maps a record in csv file to a Contact object.
+     */
     private Contact mapCsvRecordToContact(String[] recordValues) {
         Integer listingId = Integer.parseInt(recordValues[0]);
 

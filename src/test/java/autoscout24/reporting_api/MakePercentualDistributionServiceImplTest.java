@@ -2,7 +2,6 @@ package autoscout24.reporting_api;
 
 import autoscout24.reporting_api.repository.ListingRepository;
 import autoscout24.reporting_api.service.impl.MakePercentualDistributionServiceImpl;
-import autoscout24.reporting_api.service.impl.SellerTypeAveragePriceServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -10,10 +9,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -33,7 +34,7 @@ public class MakePercentualDistributionServiceImplTest {
     }
 
     @Test
-    public void getMakePercentualDistributionTest(){
+    public void getMakePercentualDistributionTest() {
 
         Map<String, String> expectedResult = new LinkedHashMap<>();
         expectedResult.put("Mercedes", "33%");

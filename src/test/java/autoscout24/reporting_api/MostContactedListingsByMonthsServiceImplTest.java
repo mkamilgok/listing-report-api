@@ -1,13 +1,13 @@
 package autoscout24.reporting_api;
 
 import autoscout24.reporting_api.repository.ContactRepository;
-import autoscout24.reporting_api.repository.ListingRepository;
-import autoscout24.reporting_api.service.impl.MakePercentualDistributionServiceImpl;
 import autoscout24.reporting_api.service.impl.MostContactedListingsByMonthsServiceImpl;
 import autoscout24.reporting_api.utils.ListingWithRanking;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
@@ -36,7 +36,7 @@ public class MostContactedListingsByMonthsServiceImplTest {
     }
 
     @Test
-    public void getMostContactedListingsByMonthsTest(){
+    public void getMostContactedListingsByMonthsTest() {
         List<Object[]> topListingsTest = new ArrayList<>();
         topListingsTest.add(new Object[]{"1000", "BMW", "20000", "55000", "20"});
         topListingsTest.add(new Object[]{"1212", "Audi", "33000", "55000", "20"});
@@ -52,10 +52,10 @@ public class MostContactedListingsByMonthsServiceImplTest {
         given(contactRepository.getLatestContactDate()).willReturn(latestDate);
 
         given(contactRepository.findMostContactedListingsBetweenDates(any(LocalDateTime.class), any(LocalDateTime.class)))
-                                .willReturn(topListingsTest);
+                .willReturn(topListingsTest);
 
         List<Map<String, List<ListingWithRanking>>> result = mostContactedListingsByMonthsServiceImpl
-                                                                    .getMostContactedListingsByMonths();
+                .getMostContactedListingsByMonths();
 
         assertEquals(16, result.size());
 

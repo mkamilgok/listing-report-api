@@ -2,29 +2,22 @@ package autoscout24.reporting_api;
 
 import autoscout24.reporting_api.repository.ContactRepository;
 import autoscout24.reporting_api.repository.ListingRepository;
-import autoscout24.reporting_api.service.MostContactedAveragePriceService;
 import autoscout24.reporting_api.service.impl.MostContactedAveragePriceServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
 @SpringBootTest
@@ -45,7 +38,7 @@ public class MostContractedAveragePriceServiceImplTest {
     }
 
     @Test
-    public void getMostContactedAveragePriceShouldReturnCorrectValue(){
+    public void getMostContactedAveragePriceShouldReturnCorrectValue() {
 
         given(listingRepository.count()).willReturn(10L);
 

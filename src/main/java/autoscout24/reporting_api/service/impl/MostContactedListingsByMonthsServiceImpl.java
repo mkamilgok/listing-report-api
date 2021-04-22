@@ -25,10 +25,12 @@ public class MostContactedListingsByMonthsServiceImpl implements MostContactedLi
 
         List<Map<String, List<ListingWithRanking>>> mostContactedListingsByMonths = new ArrayList<>();
 
+        //get earliest month to report
         LocalDateTime earliestContactDate = contactRepository.getEarliestContactDate();
         int startYear = earliestContactDate.getYear();
         Month startMonth = earliestContactDate.getMonth();
 
+        //get the last month to report
         LocalDateTime latestContactDate = contactRepository.getLatestContactDate();
         int lastYear = latestContactDate.getYear();
         Month lastMonth = latestContactDate.getMonth();
@@ -47,6 +49,7 @@ public class MostContactedListingsByMonthsServiceImpl implements MostContactedLi
 
             mostContactedListingsByMonths.add(mostContactedListingsOfCurrentMonth);
 
+            // move to the next month
             if (currentMonth.getValue() < 12) {
                 currentMonth = Month.of(currentMonth.getValue() + 1);
             } else {
@@ -58,19 +61,24 @@ public class MostContactedListingsByMonthsServiceImpl implements MostContactedLi
         return mostContactedListingsByMonths;
     }
 
+    /**
+     * getTopListingsOfMonth gets the top 5 Listing for the given year and month
+     */
     private List<ListingWithRanking> getTopListingsOfMonth(int currentYear, Month currentMonth) {
 
         List<ListingWithRanking> topListings = new ArrayList<>();
 
         LocalDateTime startDateTime = LocalDateTime.of(currentYear, currentMonth, 1, 0, 0);
 
+        //check lap year case for February instead of just using currentMonth.maxLength()
         int lastDayOfMonth = (currentMonth == Month.FEBRUARY && currentYear % 4 != 0) ? 28 : currentMonth.maxLength();
 
         LocalDateTime endDateTime = LocalDateTime.of(currentYear, currentMonth, lastDayOfMonth, 23, 59);
 
         List<Object[]> top5Listings = contactRepository.findMostContactedListingsBetweenDates(startDateTime, endDateTime)
-                                                        .subList(0, 5);
+                .subList(0, 5);
 
+        //map Object[] obtained from contactRepository to ListingWithRanking object
         for (int i = 0; i < top5Listings.size(); i++) {
             Object[] listing = top5Listings.get(i);
 

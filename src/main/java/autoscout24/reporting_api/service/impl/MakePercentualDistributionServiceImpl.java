@@ -19,7 +19,7 @@ public class MakePercentualDistributionServiceImpl implements MakePercentualDist
     public Map<String, String> getMakePercentualDistribution() {
 
         Map<String, String> makePercentualDistributionMap = new LinkedHashMap<>();
-        List<Object[]> makeCountList = listingRepository.findMakeCounts();
+        List<Object[]> makeCountList = listingRepository.findMakeCounts();//gets List of {make,countOfContact} pairs
 
         makeCountList.sort(Comparator.comparingInt(item -> Integer.parseInt(item[1].toString())));
         Collections.reverse(makeCountList);
@@ -32,7 +32,7 @@ public class MakePercentualDistributionServiceImpl implements MakePercentualDist
 
             int countOfMake = Integer.parseInt(makeCount[1].toString());
 
-            int makePercentage = (int)((countOfMake) * 100.0 / totalListingCount);
+            int makePercentage = (int) ((countOfMake) * 100.0 / totalListingCount); //calculates the percentage of make
 
             makePercentualDistributionMap.put(make, makePercentage + "%");
         }

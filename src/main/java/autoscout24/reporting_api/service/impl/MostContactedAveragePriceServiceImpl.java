@@ -26,10 +26,11 @@ public class MostContactedAveragePriceServiceImpl implements MostContactedAverag
 
         int countOf30Percent = (int) listingRepository.count() * 3 / 10;
 
-        //JPQL CANNOT LIMIT MAXIMUM RESULT SIZE(ROW NUMBER)
+        //gets listing ids sorted descending with respect to their contact counts
         List<Integer> mostContactedListingsAll = contactRepository.findMostContactedListings();
 
-        if(mostContactedListingsAll.size() < countOf30Percent){
+        //if the count of distinct listings in contactRepository less than countOf30Percent, update countOf30Percent
+        if (mostContactedListingsAll.size() < countOf30Percent) {
             countOf30Percent = mostContactedListingsAll.size();
         }
 
